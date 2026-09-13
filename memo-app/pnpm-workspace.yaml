@@ -1,0 +1,11 @@
+packages:
+  - '.'
+allowBuilds:
+  electron: true
+  electron-builder: true
+  electron-winstaller: false
+  '@electron/rebuild': true
+# electron-builder 26.15.3 声明的是 @electron/get ^3，但代码里用的是 4.0+ 才有的
+# ElectronDownloadCacheMode 枚举 -> 下载 nsis/winCodeSign 工具链时会崩。这里强制升到 5.1.0。
+overrides:
+  '@electron/get': 5.1.0

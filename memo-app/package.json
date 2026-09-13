@@ -1,0 +1,74 @@
+{
+  "name": "nomoretomorrow-memo",
+  "productName": "NoMoreTomorrow",
+  "version": "1.0.0",
+  "description": "NoMoreTomorrow 桌面便签 · 多窗口 · 单进程 · 便携数据目录 · 开机自启",
+  "main": "app/main.js",
+  "author": "NoMoreTomorrow",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync-html.mjs",
+    "icons": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/make-icons.ps1",
+    "start": "node scripts/sync-html.mjs && electron .",
+    "dist": "node scripts/sync-html.mjs && electron-builder --win --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.3.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.nomoretomorrow.memo",
+    "productName": "NoMoreTomorrow",
+    "copyright": "NoMoreTomorrow",
+    "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "app/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "assets",
+        "to": "assets"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "artifactName": "NoMoreTomorrow-${version}-${arch}.${ext}",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "NoMoreTomorrow-Portable-${version}.exe",
+      "requestExecutionLevel": "user"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "NoMoreTomorrow 便签",
+      "artifactName": "NoMoreTomorrow-Setup-${version}.exe",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  }
+}
